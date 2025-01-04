@@ -1,5 +1,10 @@
 // const { _setMinAndMaxByKey } = require("chart.js/helpers");
 
+// const { Chart } = require("chart.js");
+// const { renderText } = require("chart.js/helpers");
+
+// const { color } = require("chart.js/helpers");
+
 
 
 
@@ -23,6 +28,7 @@ searchInput.addEventListener("keypress", function (event) {
 	if (event.key === 'Enter') {
 		fetchWeatherData(searchInput.value);
 	}
+	
 }
 );
 const cityname = searchInput.value;
@@ -37,10 +43,21 @@ async function fetchWeatherData(cityname) {
 		console.log(lat)
 		console.log(lon)
 		checkWeather(lat, lon);
+		if (response.ok) {
+			console.log('Promise resolved');
+		} else {
+			//failed HTTP codes
+			if (response.status === 400) throw new Error('Empty');
+			if (response.status === 404) throw new Error('404, Not found');
+			if (response.status === 500) throw new Error('500, internal server error');
+			// For any other server error
+			throw new Error(response.status);
+		}
 	} catch (error) {
-		console.error(error);
+		console.error('Fetch', error);
+
 	}
-};
+}
 
 // Call the function
 fetchWeatherData();
@@ -52,13 +69,8 @@ console.log(lon)
 // const apiKey1 = "bca34017f9a9fab4408fd5b6e3ed6e05";
 // const apiUrl = "https://api.openweathermap.org/data/2.5/forecast?";
 async function checkWeather(lat, lon) {
-	const response = await fetch(apiUrl + `lat=` + lat + `&lon=` + lon + `&appid=${apiKey}` + `&units=metric`);
-
-	if (response.status == 404) {
-		document.querySelector(".error").style.display = "block";
-		document.querySelector(".weather").style.display = "none";
-	}
-	else {
+	try {
+		const response = await fetch(apiUrl + `lat=` + lat + `&lon=` + lon + `&appid=${apiKey}` + `&units=metric`);
 		let data = await response.json();
 		console.log(data);
 		var list = data.list;
@@ -76,20 +88,30 @@ async function checkWeather(lat, lon) {
 
 
 
+		// if(cityname===""){
+		// 	myChart.destroy();
+		// }
 
+		
 		const ctx = document.getElementById('myChart');
 
-		new Chart(ctx, {
+		const myChart = new Chart(ctx, {
 			type: 'line',
 			data: {
-				labels: [dt_txt],
+				labels: dt_txt,
 				datasets: [{
-					label: '# of Votes',
-					data: [temp1],
-					borderWidth: 1
+					label: 'temprature',
+					data: temp1,
+					borderWidth: 1,
+					borderColor: '#F5EFE7',
+					backgroundColor: '#D8C4B6',
+					color: '#F5EFE7',	
+
 				}]
 			},
 			options: {
+				responsive : true,
+				maintainAspectRatio : true,
 				scales: {
 					y: {
 						beginAtZero: false
@@ -98,8 +120,20 @@ async function checkWeather(lat, lon) {
 			}
 		});
 
+		
 
-
+		if (response.ok) {
+			console.log('Promise resolved');
+		} else {
+			//failed HTTP codes
+			if (response.status === 400) throw new Error('400 Bad Query');
+			if (response.status === 404) throw new Error('404, Not found');
+			if (response.status === 500) throw new Error('500, internal server error');
+			// For any other server error
+			throw new Error(response.status);
+		}
+	} catch (error) {
+		console.error('Fetch', error);
 
 	}
 }
@@ -107,5 +141,16 @@ async function checkWeather(lat, lon) {
 
 
 
+
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 //https://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=bca34017f9a9fab4408fd5b6e3ed6e05
+
+
+
+// CELSIUS TO FAHRENHEIT CONVERSION :-
+// function celsiusToFahrenheit(celsius) {
+//     return (celsius * 9/5) + 32;
+// }
+// const celsiusValue = 25; // Replace with the value you receive
+// const fahrenheitValue = celsiusToFahrenheit(celsiusValue);
+// console.log(`${celsiusValue}°C is equal to ${fahrenheitValue}°F`);

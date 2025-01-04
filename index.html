@@ -4,16 +4,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Today's Weather</title>
     <link rel="stylesheet" href="style.css"> 
+    <style>
+        body {
+                 font-family: 'Roboto', sans-serif;
+                background-image: url('images/bg.svg');
+                background-size: cover;
+                 background-repeat: no-repeat;
+                 color: white;
+             }
+
+             .forecast-grid {
+             display: grid;
+    grid-template-columns: repeat(6, 1fr);
+
+             gap: 10px;
+             flex-wrap: wrap;
+            }
+
+            .forecast-day {
+              background: rgba(11, 16, 55, 1);
+              border-radius: 40px;
+              padding: 26px 6px;
+              display: flex;
+
+              flex-direction: column;
+              align-items: center;
+              width: 92px;
+              }
+       </style>
 </head>
 
-<body>
+<body class="p-4">
+    <div class="max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold">
+        Weather
+       </h1>
+
+       <div>
+        <!-- button  -->
+         <button class="btn-gray p-2 rounded-full">
+            <i class="fas fa-search">🔍</i>
+         </button> 
+         <input class="bg-gray-700 p-2 rounded-full text-white placeholder-gray-400" id="searchinput" placeholder="Search for a city or airport" type="text"/>
+         <button class="bg-gray-700 p-2 rounded-full">
+          <i class="fas fa-cog">
+          </i>
+         </button>
+    </div>
+  
+       <div>
+        <img alt="Weather icon" class="mb-2" height="100" src="images/image 2.svg" width="100"/>
+        <h2 class="text-4xl font-bold">
+         INDORE
+        </h2>
+        <p class="text-6xl font-bold">
+         19°
+        </p>
+        <p class="text-lg">
+         Mostly Clear
+        </p>
+        <p class="text-sm">
+         H:24° L:18°
+        </p>
+        <p class="text-sm">
+         TUESDAY, 1:41
+        </p>
+       </div>
+   
+
+
+
+    
+
+
+       <div class="forecast-grid ">
+        <div class="forecast-day">
+          <h3 class="day-name">Tues</h3>
+          <img src="images/clouds 2.svg" alt="Tuesday weather" class="forecast-icon">
+          <div class="day-temp">27°C</div>
+        </div>
+        <div class="forecast-day">
+          <h3 class="day-name">Wed</h3>
+          <img src="images/clouds 2.svg" alt="Wednesday weather" class="forecast-icon">
+          <div class="day-temp">25°C</div>
+        </div>
+        <div class="forecast-day">
+          <h3 class="day-name">Fri</h3>
+          <img src="images/clear 3.svg" alt="Friday weather" class="forecast-icon">
+          <div class="day-temp">22°C</div>
+        </div>
+        <div class="forecast-day">
+          <h3 class="day-name">Satur</h3>
+          <img src="images/clear 3.svg" alt="Saturday weather" class="forecast-icon">
+          <div class="day-temp">22°C</div>
+        </div>
+        <div class="forecast-day">
+          <h3 class="day-name">Sun</h3>
+          <img src="images/clear 3.svg" alt="Sunday weather" class="forecast-icon">
+          <div class="day-temp">26°C</div>
+        </div>
+        <div class="forecast-day">
+          <h3 class="day-name">Mon</h3>
+          <img src="images/clear 3.svg" alt="Monday weather" class="forecast-icon">
+          <div class="day-temp">27°C</div>
+        </div>
+      </div>
+    </div>
     <div class="chart">
         <canvas id="myChart"></canvas>
     </div>
-    <input type="text" id="searchinput" placeholder="Enter city name">
-    
+
+    <h3 class="text-2xl font-bold">Today's Highlights</h3>
+    <div class="grid">
+        <div class="bg-gray-700 p-4 rounded-lg text-center">
+            
+            </div>
+    </div>
+
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>
