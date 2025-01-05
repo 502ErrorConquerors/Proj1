@@ -154,3 +154,36 @@ async function checkWeather(lat, lon) {
 // const celsiusValue = 25; // Replace with the value you receive
 // const fahrenheitValue = celsiusToFahrenheit(celsiusValue);
 // console.log(`${celsiusValue}°C is equal to ${fahrenheitValue}°F`);
+
+
+// CELSIUS TO FAHRENHEIT CONVERSION :-
+// function celsiusToFahrenheit(celsius) {
+//     return (celsius * 9 / 5) + 32;
+// }
+
+// async function convertToCelsiusAndFahrenheit(lat, lon) {
+//     try {
+//         const response = await fetch(apiUrl + `lat=` + lat + `&lon=` + lon + `&appid=${apiKey}` + `&units=metric`);
+//         let data = await response.json();
+
+//         var list = data.list; 
+//         console.log("Forecast List:", list);
+
+//         const tempCelsius = list.map(obj => obj.main.temp);
+//         console.log("Temperatures in Celsius:", tempCelsius);
+
+//         const tempFahrenheit = tempCelsius.map(celsiusToFahrenheit);
+//         console.log("Temperatures in Fahrenheit:", tempFahrenheit);
+
+//         const dt_txt = list.map(obj => obj.dt_txt);
+//         dt_txt.forEach((time, index) => {
+//             console.log(`At ${time}: ${tempCelsius[index]}°C = ${tempFahrenheit[index]}°F`);
+//         });
+//     } catch (error) {
+//         console.error('Error converting temperatures:', error);
+//     }
+// }
+
+// convertToCelsiusAndFahrenheit(lat, lon);
+
+
