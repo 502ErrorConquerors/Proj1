@@ -68,19 +68,34 @@ console.log(lon)
 // //copied code
 // const apiKey1 = "bca34017f9a9fab4408fd5b6e3ed6e05";
 // const apiUrl = "https://api.openweathermap.org/data/2.5/forecast?";
+
+
 async function checkWeather(lat, lon) {
-	try {
 		const response = await fetch(apiUrl + `lat=` + lat + `&lon=` + lon + `&appid=${apiKey}` + `&units=metric`);
 		let data = await response.json();
 		console.log(data);
-		var list = data.list;
-		console.log(list);
+		var dataList = data.list;
+		console.log(dataList);
+
+		const dt_txt_all = dataList.map((obj)=>obj.dt_txt)
+		function fiveDayForecast(dt_txt_all) {
+			const dailyWeather = data.list.filter((dt_txt_all)=>dt_txt_all.dt_txt.includes('12:00:00'))
+			console.log(dailyWeather)
+			const temp1 = dailyWeather.map(obj => obj.main.temp);
+		console.log(temp1);
+		const dt_txt5day = dailyWeather.map(obj => obj.dt_txt);
+		console.log(dt_txt5day);
+		
+
+		charts(dt_txt5day,temp1);
+		}
+		fiveDayForecast(dt_txt_all);
 		// var map= new Map(list);
 		// console.log(map.get('main.temp'));
-		const temp1 = list.map(obj => obj.main.temp);
-		console.log(temp1);
-		const dt_txt = list.map(obj => obj.dt_txt);
-		console.log(dt_txt);
+		// const temp1 = list.map(obj => obj.main.temp);
+		// console.log(temp1);
+		// const dt_txt = list.map(obj => obj.dt_txt);
+		// console.log(dt_txt);
 		// const date= new Date(dt).toLocaleString;
 		// console.log(date);
 		// let localeDates = dt.map(date => new Date(date).toLocaleString());
@@ -91,22 +106,22 @@ async function checkWeather(lat, lon) {
 		// if(cityname===""){
 		// 	myChart.destroy();
 		// }
-
+	}
+function charts(dt_txt5day,temp1){
 		
 		const ctx = document.getElementById('myChart');
 
 		const myChart = new Chart(ctx, {
 			type: 'line',
 			data: {
-				labels: dt_txt,
+				labels: dt_txt5day,
 				datasets: [{
 					label: 'temprature',
 					data: temp1,
 					borderWidth: 1,
-					borderColor: '#F5EFE7',
-					backgroundColor: '#D8C4B6',
-					color: '#F5EFE7',	
-
+					borderColor: 'white',
+					backgroundColor: 'white',
+					color: 'black',	
 				}]
 			},
 			options: {
@@ -114,30 +129,36 @@ async function checkWeather(lat, lon) {
 				maintainAspectRatio : true,
 				scales: {
 					y: {
-						beginAtZero: false
+						beginAtZero: false,
+						grid : {
+							color : "black"
+						},
+						border : {
+							color : "black"
+						},
+						ticks : {
+							color : "white"
+						}
+					},
+					x : {
+						grid : {
+							color : "black"
+						},
+						border : {
+							color : "black"
+						},
+						ticks : {
+							color : "white"
+						}
+
 					}
 				}
 			}
 		});
+		// myChart.destroy();
 
 		
-
-		if (response.ok) {
-			console.log('Promise resolved');
-		} else {
-			//failed HTTP codes
-			if (response.status === 400) throw new Error('400 Bad Query');
-			if (response.status === 404) throw new Error('404, Not found');
-			if (response.status === 500) throw new Error('500, internal server error');
-			// For any other server error
-			throw new Error(response.status);
-		}
-	} catch (error) {
-		console.error('Fetch', error);
-
-	}
 }
-
 
 
 
@@ -186,4 +207,4 @@ async function checkWeather(lat, lon) {
 
 // convertToCelsiusAndFahrenheit(lat, lon);
 
-
+bu

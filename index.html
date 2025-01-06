@@ -2,152 +2,602 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather-Updates</title>
-    <link rel="stylesheet" href="style.css"> 
-    <style>
-        body {
-                 font-family: 'Roboto', sans-serif;
-                background-image: url('images/bg.svg');
-                background-size: cover;
-                 background-repeat: no-repeat;
-                 color: white;
-             }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather-Updates</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-image: url('images/bg.svg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      color: white;
 
-             .forecast-grid {
-             display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    }
 
-             gap: 10px;
-             flex-wrap: wrap;
-            }
+    .forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
 
-            .forecast-day {
-              background: rgba(11, 16, 55, 1);
-              border-radius: 40px;
-              padding: 26px 6px;
-              display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
 
-              flex-direction: column;
-              align-items: center;
-              width: 92px;
-              }
-       </style>
+    .forecast-day {
+      background: rgba(11, 16, 55, 1);
+      border-radius: 40px;
+      padding: 26px 6px;
+      display: flex;
+
+      flex-direction: column;
+      align-items: center;
+      width: 92px;
+    }
+
+
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: left;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .card {
+      background: linear-gradient(168.44deg, #2E335A 1.62%, #1C1B33 95.72%);
+
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .card-medium {
+      width: 200px;
+      height: 150px;
+    }
+
+    .card-large {
+      width: 300px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .card p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .progress-bar {
+      width: 80%;
+      height: 10px;
+      border-radius: 5px;
+      background: linear-gradient(to right, green, yellow, orange, red, purple);
+      margin: 10px 0;
+    }
+
+    .see-more {
+      margin-top: 5px;
+      font-size: 14px;
+      opacity: 0.7;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stat-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .stat-label {
+      color: rgba(255, 255, 255, 0.57);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.84px;
+    }
+
+    .stat-value {
+      font-size: 42px;
+      font-weight: 500;
+      margin: 8px 0;
+    }
+
+    .stat-info {
+      font-size: 12px;
+      letter-spacing: 0.84px;
+      margin-top: 53px;
+    }
+
+    .quality-level {
+      margin: 22px 0;
+      font-size: 12px;
+      letter-spacing: 0.84px;
+    }
+
+    .quality-meter {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      margin: 19px 0;
+    }
+
+    .quality-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 33px;
+    }
+
+    .see-more-btn {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .arrow-icon {
+      width: 9px;
+      height: 15px;
+    }
+
+    .citydata {
+      padding: 20px;
+    }
+
+    .weather-data {
+      display: flex;
+      justify-content: space-evenly;
+
+      margin-top: 20px;
+    }
+
+    .forecast-box {
+      padding: 30px;
+      background: linear-gradient(180deg, #282D51 0%, #5762B0 33%, #5B65B7 100%);
+
+      border-radius: 20px;
+    }
+
+    #searchinput {
+      width: 100%;
+      box-shadow: -40px 60px 150px 0px #3B267B67;
+      border: none;
+      color: white;
+    }
+
+    .weather-controls {
+      display: flex;
+      width: 100%;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      /* Aligning content to the right */
+      padding: 20px;
+    }
+
+    .time-selector {
+      align-self: start;
+      display: flex;
+      margin-top: 7px;
+      align-items: start;
+      gap: 28px;
+      color: #fff;
+      white-space: nowrap;
+      text-align: center;
+      letter-spacing: -0.41px;
+      font: 600 20px/1.1 Inter, sans-serif;
+    }
+
+    .today-tab {
+      z-index: 10;
+      padding: 2px 0;
+      cursor: pointer;
+    }
+
+    .week-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .week-tab {
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    .week-underline {
+      margin-top: 5px;
+      height: 1px;
+      border: 1px solid #fff;
+    }
+
+    .settings-container {
+      display: flex;
+      gap: 29px;
+    }
+
+    .theme-toggle {
+      display: flex;
+      flex-direction: column;
+      margin: auto 0;
+    }
+
+    .toggle-switch {
+      border-radius: 40px;
+      background-color: #D9D9D9;
+      display: flex;
+      width: 52px;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      padding: 2px 10px;
+      cursor: pointer;
+    }
+
+    .toggle-button {
+      background-color: #111;
+      border-radius: 50%;
+      display: flex;
+      width: 100%;
+      height: 15px;
+    }
+
+    .theme-label {
+      color: #fff;
+      font: 500 15px Poppins, sans-serif;
+    }
+
+    .temp-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      white-space: nowrap;
+      text-align: center;
+      letter-spacing: -0.41px;
+      font: 600 20px/1.1 Inter, sans-serif;
+    }
+
+    .celsius,
+    .fahrenheit {
+      background-color: #D9D9D9;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .celsius {
+      background-color: #52577E;
+      color: #FDFBFB;
+    }
+
+    .fahrenheit {
+      color: #000;
+    }
+
+    .temp-display {
+      border-radius: 17px;
+      background-color: #D9D9D9;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      display: flex;
+      width: 54px;
+      height: 47px;
+      border: 1px solid #000;
+    }
+
+    @media (max-width: 991px) {
+      .weather-controls {
+        justify-content: center;
+      }
+
+      .time-selector,
+      .today-tab,
+      .week-container,
+      .temp-controls,
+      .celsius,
+      .fahrenheit {
+        white-space: initial;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .celsius,
+      .fahrenheit {
+        transition: none;
+      }
+    }
+
+    .celsius:hover,
+    .fahrenheit:hover,
+    .toggle-switch:hover,
+    .today-tab:hover,
+    .week-tab:hover {
+      opacity: 0.8;
+    }
+
+    .celsius:focus,
+    .fahrenheit:focus,
+    .toggle-switch:focus,
+    .today-tab:focus,
+    .week-tab:focus {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+  </style>
 </head>
 
 <body class="p-4">
-    <div class="max-w-4xl mx-auto">
+
+
+
+  <div class="max-w-4xl mx-auto">
     <h1 class="text-2xl font-bold">
-        Weather
-       </h1>
-
-       <div>
-        <!-- button  -->
-         <button class="btn-gray p-2 rounded-full">
-            <i class="fas fa-search">🔍</i>
-         </button> 
-         <input class="bg-gray-700 p-2 rounded-full text-white placeholder-gray-400" id="searchinput" placeholder="Search for a city or airport" type="text"/>
-         <button class="bg-gray-700 p-2 rounded-full">
-          <i class="fas fa-cog">
-          </i>
-         </button>
-    </div>
-  
-       <div>
-        <img alt="Weather icon" class="mb-2" height="100" src="images/image 2.svg" width="100"/>
-        <h2 class="text-4xl font-bold">
-         INDORE
-        </h2>
-        <p class="text-6xl font-bold">
-         19°
-        </p>
-        <p class="text-lg">
-         Mostly Clear
-        </p>
-        <p class="text-sm">
-         H:24° L:18°
-        </p>
-        <p class="text-sm">
-         TUESDAY, 1:41
-        </p>
-       </div>
-   
-
-
-
-    
-
-
-       <div class="forecast-grid ">
-        <div class="forecast-day">
-          <h3 class="day-name">Tues</h3>
-          <img src="images/clouds 2.svg" alt="Tuesday weather" class="forecast-icon">
-          <div class="day-temp">27°C</div>
+      Weather
+    </h1>
+    <div class="weather-controls">
+      <div class="settings-container">
+        <div class="theme-toggle">
+          <div class="toggle-switch" tabindex="0" role="switch" aria-checked="false">
+            <div class="toggle-button"></div>
+          </div>
+          <div class="theme-label">Dark Mode</div>
         </div>
-        <div class="forecast-day">
-          <h3 class="day-name">Wed</h3>
-          <img src="images/clouds 2.svg" alt="Wednesday weather" class="forecast-icon">
-          <div class="day-temp">25°C</div>
-        </div>
-        <div class="forecast-day">
-          <h3 class="day-name">Fri</h3>
-          <img src="images/clear 3.svg" alt="Friday weather" class="forecast-icon">
-          <div class="day-temp">22°C</div>
-        </div>
-        <div class="forecast-day">
-          <h3 class="day-name">Satur</h3>
-          <img src="images/clear 3.svg" alt="Saturday weather" class="forecast-icon">
-          <div class="day-temp">22°C</div>
-        </div>
-        <div class="forecast-day">
-          <h3 class="day-name">Sun</h3>
-          <img src="images/clear 3.svg" alt="Sunday weather" class="forecast-icon">
-          <div class="day-temp">26°C</div>
-        </div>
-        <div class="forecast-day">
-          <h3 class="day-name">Mon</h3>
-          <img src="images/clear 3.svg" alt="Monday weather" class="forecast-icon">
-          <div class="day-temp">27°C</div>
+        <div class="temp-controls">
+          <div class="celsius" tabindex="0" role="button" aria-pressed="true">°C</div>
+          <div class="fahrenheit" tabindex="0" role="button" aria-pressed="false">°F</div>
+          <div class="temp-display" aria-label="Temperature display"></div>
         </div>
       </div>
     </div>
-    <div class="chart">
-        <canvas id="myChart"></canvas>
+
+    <div>
+
+      <button class="btn-gray p-2 rounded-full">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <input class="bg-gray-700 p-2 rounded-full text-white placeholder-gray-400" id="searchinput"
+        placeholder="Search for a city or airport" type="text" />
+      <button class="bg-gray-700 p-2 rounded-full">
+        <i class="fas fa-cog">
+        </i>
+      </button>
     </div>
 
-    <h3 class="text-2xl font-bold">Today's Highlights</h3>
-    <div class="grid">
-        <div class="bg-gray-700 p-4 rounded-lg text-center">
-            
-            </div>
+    <div style="position: relative; display: inline-block; width: 300px;
+">
+<div style="position: relative; display: inline-block; width: 300px;">
+  <!-- Search Button -->
+  <button 
+    style="
+      position: absolute; 
+      top: 50%; 
+      left: 12px; 
+      transform: translateY(-50%); 
+      background: none; 
+      border: none; 
+      cursor: pointer; 
+      color: gray;">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+  <!-- Search Input -->
+  <input 
+    class="bg-gray-700 p-2 pl-14 rounded-full text-white placeholder-gray-400" 
+    id="searchinput"
+    placeholder="Search for a city or airport" 
+    type="text" 
+    style="width: 100%; box-sizing: border-box; text-align:center"/>
+</div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+
+
+    <div class="weather-data">
+      <div class="citydata">
+
+        <h2 class="text-4xl font-bold ">
+          INDORE
+        </h2>
+        <p class="text-6xl font-bold">
+          19°
+        </p>
+        <p class="text-lg">
+          Mostly Clear
+        </p>
+        <p class="text-sm">
+          H:24° L:18°
+        </p>
+        <p class="text-sm">
+          TUESDAY, 1:41
+        </p>
+      </div>
+
+
+
+
+
+
+      <div class="forecast-box">
+        <div class="forecast-grid ">
+          <div class="forecast-day">
+            <h3 class="day-name">Tues</h3>
+            <img src="images/clouds 2.svg" alt="Tuesday weather" class="forecast-icon">
+            <div class="day-temp">27°C</div>
+          </div>
+          <div class="forecast-day">
+            <h3 class="day-name">Wed</h3>
+            <img src="images/clouds 2.svg" alt="Wednesday weather" class="forecast-icon">
+            <div class="day-temp">25°C</div>
+          </div>
+          <div class="forecast-day">
+            <h3 class="day-name">Fri</h3>
+            <img src="images/clear 3.svg" alt="Friday weather" class="forecast-icon">
+            <div class="day-temp">22°C</div>
+          </div>
+          <div class="forecast-day">
+            <h3 class="day-name">Satur</h3>
+            <img src="images/clear 3.svg" alt="Saturday weather" class="forecast-icon">
+            <div class="day-temp">22°C</div>
+          </div>
+          <div class="forecast-day">
+            <h3 class="day-name">Sun</h3>
+            <img src="images/clear 3.svg" alt="Sunday weather" class="forecast-icon">
+            <div class="day-temp">26°C</div>
+          </div>
+          <div class="forecast-day">
+            <h3 class="day-name">Mon</h3>
+            <img src="images/clear 3.svg" alt="Monday weather" class="forecast-icon">
+            <div class="day-temp">27°C</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="chart" style="position: relative; height:60vh; width:90vw">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <h3 class="text-2xl font-bold">Today's Highlights</h3>
+  <div class="container">
+    <!-- Row 1 -->
+    <div class="row">
+      <!-- Card 1: Humidity -->
+      <div class="card card-medium">
+        <div class="stat-header">
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/fbd9e4058b9e3875946f5254a34a4e24fd08e3ec87d0497754a49c331a5d933b"
+            alt="Humidity" class="stat-icon">
+          <span class="stat-label">HUMIDITY</span>
+        </div>
+      </div>
+
+      <!-- Card 2: Wind -->
+      <div class="card card-medium">
+        <div class="stat-header">
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/a933361ce0f5923c1dd40d3b67a1d88336398806d4efc078ee8f0be0e05e317d"
+            alt="Wind" class="stat-icon">
+          <span class="stat-label">WIND</span>
+        </div>
+      </div>
+
+      <!-- Card 3: Rainfall -->
+      <div class="card card-medium">
+        <div class="stat-header">
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/b5445529017309488e541ba91be1557462b60bd6eaf5eff531b3fb3f06b3e7e4"
+            alt="Rainfall" class="stat-icon">
+          <span class="stat-label">RAINFALL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row">
+      <!-- Card 4: Feels Like -->
+      <div class="card card-medium">
+        <div class="stat-header">
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/6df86e609a77cea6e2a5e503f76495406abd965948ac8812eae5225304920fa0"
+            alt="Feels Like" class="stat-icon">
+          <span class="stat-label">FEELS LIKE</span>
+        </div>
+      </div>
+
+      <!-- Card 5: Air Quality -->
+      <div class="card card-large">
+        <div class="stat-header">
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6654dbf9e620cc2d7c2320d32fcb5585e964d6b64b306ecb87e9eb17e62bd7"
+            alt="Air Quality" class="stat-icon">
+          <span class="stat-label">AIR QUALITY</span>
+        </div>
+        <h3>3 - LOW HEALTH RISK</h3>
+        <div class="progress-bar"></div>
+        <div class="see-more">See More ➔</div>
+      </div>
+    </div>
+  </div>
+
+
 
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>
 <script>
-    // const ctx = document.getElementById('myChart');
+  // const ctx = document.getElementById('myChart');
 
-    // new Chart(ctx, {
-    //     type: 'line',
-    //     data: {
-    //         labels: ['04:00', '05:00','06:00', '07:00','08:00', '09:00', '10:00', '11:00', '12:00', '01:00'],
-    //         datasets: [{
-    //             label: '# of Votes',
-    //             data: [13, 12, 12, 11, 12, 14, 16, 16, 17, 19],
-    //             borderWidth: 1
-    //         }]
-    //     },
-    //     options: {
-    //         scales: {
-    //             y: {
-    //                 beginAtZero: false
-    //             }
-    //         }
-    //     }
-    // });
+  // new Chart(ctx, {
+  //     type: 'line',
+  //     data: {
+  //         labels: ['04:00', '05:00','06:00', '07:00','08:00', '09:00', '10:00', '11:00', '12:00', '01:00'],
+  //         datasets: [{
+  //             label: '# of Votes',
+  //             data: [13, 12, 12, 11, 12, 14, 16, 16, 17, 19],
+  //             borderWidth: 1
+  //         }]
+  //     },
+  //     options: {
+  //         scales: {
+  //             y: {
+  //                 beginAtZero: false
+  //             }
+  //         }
+  //     }
+  // });
 </script>
 
 </html>
