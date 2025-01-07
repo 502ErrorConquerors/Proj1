@@ -27,8 +27,12 @@ const searchInput = document.getElementById("searchinput");
 searchInput.addEventListener("keypress", function (event) {
 	if (event.key === 'Enter') {
 		fetchWeatherData(searchInput.value);
+		var existingChart = Chart.getChart('myChart');
+		if (existingChart) {
+			existingChart.destroy();
+		}
 	}
-	
+
 }
 );
 const cityname = searchInput.value;
@@ -71,97 +75,99 @@ console.log(lon)
 
 
 async function checkWeather(lat, lon) {
-		const response = await fetch(apiUrl + `lat=` + lat + `&lon=` + lon + `&appid=${apiKey}` + `&units=metric`);
-		let data = await response.json();
-		console.log(data);
-		var dataList = data.list;
-		console.log(dataList);
+	const response = await fetch(apiUrl + `lat=` + lat + `&lon=` + lon + `&appid=${apiKey}` + `&units=metric`);
+	let data = await response.json();
+	console.log(data);
+	var dataList = data.list;
+	console.log(dataList);
 
-		const dt_txt_all = dataList.map((obj)=>obj.dt_txt)
-		function fiveDayForecast(dt_txt_all) {
-			const dailyWeather = data.list.filter((dt_txt_all)=>dt_txt_all.dt_txt.includes('12:00:00'))
-			console.log(dailyWeather)
-			const temp1 = dailyWeather.map(obj => obj.main.temp);
+	const dt_txt_all = dataList.map((obj) => obj.dt_txt)
+	function fiveDayForecast(dt_txt_all) {
+		const dailyWeather = data.list.filter((dt_txt_all) => dt_txt_all.dt_txt.includes('12:00:00'))
+		console.log(dailyWeather)
+		const temp1 = dailyWeather.map(obj => obj.main.temp);
 		console.log(temp1);
 		const dt_txt5day = dailyWeather.map(obj => obj.dt_txt);
 		console.log(dt_txt5day);
-		
-
-		charts(dt_txt5day,temp1);
-		}
-		fiveDayForecast(dt_txt_all);
-		// var map= new Map(list);
-		// console.log(map.get('main.temp'));
-		// const temp1 = list.map(obj => obj.main.temp);
-		// console.log(temp1);
-		// const dt_txt = list.map(obj => obj.dt_txt);
-		// console.log(dt_txt);
-		// const date= new Date(dt).toLocaleString;
-		// console.log(date);
-		// let localeDates = dt.map(date => new Date(date).toLocaleString());
-		// console.log(localeDates);
 
 
+		charts(dt_txt5day, temp1);
 
-		// if(cityname===""){
-		// 	myChart.destroy();
-		// }
+		// removeChart(myChart);
 	}
-function charts(dt_txt5day,temp1){
-		
-		const ctx = document.getElementById('myChart');
+	fiveDayForecast(dt_txt_all);
+	// var map= new Map(list);
+	// console.log(map.get('main.temp'));
+	// const temp1 = list.map(obj => obj.main.temp);
+	// console.log(temp1);
+	// const dt_txt = list.map(obj => obj.dt_txt);
+	// console.log(dt_txt);
+	// const date= new Date(dt).toLocaleString;
+	// console.log(date);
+	// let localeDates = dt.map(date => new Date(date).toLocaleString());
+	// console.log(localeDates);
 
-		const myChart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: dt_txt5day,
-				datasets: [{
-					label: 'temprature',
-					data: temp1,
-					borderWidth: 1,
-					borderColor: 'white',
-					backgroundColor: 'white',
-					color: 'black',	
-				}]
-			},
-			options: {
-				responsive : true,
-				maintainAspectRatio : true,
-				scales: {
-					y: {
-						beginAtZero: false,
-						grid : {
-							color : "black"
-						},
-						border : {
-							color : "black"
-						},
-						ticks : {
-							color : "white"
-						}
-					},
-					x : {
-						grid : {
-							color : "black"
-						},
-						border : {
-							color : "black"
-						},
-						ticks : {
-							color : "white"
-						}
 
-					}
-				}
-			}
-		});
-		// myChart.destroy();
 
-		
+	// if(cityname===""){
+	// 	myChart.destroy();
+	// }
 }
 
 
 
+function charts(dt_txt5day, temp1) {
+
+	const ctx = document.getElementById('myChart');
+
+	const myChart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: dt_txt5day,
+			datasets: [{
+				label: 'temprature',
+				data: temp1,
+				borderWidth: 1,
+				borderColor: 'white',
+				backgroundColor: 'white',
+				color: 'black',
+			}]
+		},
+		options: {
+			responsive: true,
+			maintainAspectRatio: true,
+			scales: {
+				y: {
+					beginAtZero: false,
+					grid: {
+						color: "black"
+					},
+					border: {
+						color: "black"
+					},
+					ticks: {
+						color: "white"
+					}
+				},
+				x: {
+					grid: {
+						color: "black"
+					},
+					border: {
+						color: "black"
+					},
+					ticks: {
+						color: "white"
+					}
+
+				}
+			}
+		}
+
+	});
+
+
+}
 
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 //https://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=bca34017f9a9fab4408fd5b6e3ed6e05
@@ -207,4 +213,4 @@ function charts(dt_txt5day,temp1){
 
 // convertToCelsiusAndFahrenheit(lat, lon);
 
-bu
+
