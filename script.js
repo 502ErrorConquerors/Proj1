@@ -27,6 +27,9 @@ const searchInput = document.getElementById("searchinput");
 searchInput.addEventListener("keypress", function (event) {
 	if (event.key === 'Enter') {
 		fetchWeatherData(searchInput.value);
+
+		
+
 		var existingChart = Chart.getChart('myChart');
 		if (existingChart) {
 			existingChart.destroy();
@@ -36,17 +39,51 @@ searchInput.addEventListener("keypress", function (event) {
 }
 );
 const cityname = searchInput.value;
+
+
+
+
+
 // Define an async function to fetch weather data
 async function fetchWeatherData(cityname) {
+
+	
+
+
 	try {
+
+		const liveCityName = document.getElementsByClassName("livecitydata");
+		liveCityName[0].innerHTML = `<h4>${cityname.toUpperCase()}</h4>`;
+
+
+
 		const response = await fetch(url + cityname + `&appid=${apiKey}` + `&units=metric`);
 		const result = await response.json();  // Parse response as JSON
 		console.log(result);
 		var lon = result.coord.lon;
 		var lat = result.coord.lat;
+		
+		const livetemp = document.getElementsByClassName("livetempdata")
+		livetemp[0].innerHTML= `<p>${parseInt(result.main.temp)}°</p>`
+
+
+		const livecloud = document.getElementsByClassName("livecloudcondition")
+		livecloud[0].innerHTML = `<p>${result.weather[0].description.toUpperCase()}</p>`
+
+
+		const temp_max = document.getElementsByClassName("livetemp_max")
+		temp_max[0].innerHTML = `<p>Max:${result.main.temp_max}</p>`
+
+		const temp_min = document.getElementsByClassName("livetemp_min")
+		temp_max[0].innerHTML = `<p>Min:${result.main.temp_min}</p>`
+
 		console.log(lat)
 		console.log(lon)
 		checkWeather(lat, lon);
+
+		
+
+
 		if (response.ok) {
 			console.log('Promise resolved');
 		} else {
@@ -65,8 +102,8 @@ async function fetchWeatherData(cityname) {
 
 // Call the function
 fetchWeatherData();
-console.log(lat)
-console.log(lon)
+// console.log(lat)
+// console.log(lon)
 
 
 // //copied code
@@ -83,7 +120,7 @@ async function checkWeather(lat, lon) {
 
 	const dt_txt_all = dataList.map((obj) => obj.dt_txt)
 	function fiveDayForecast(dt_txt_all) {
-		const dailyWeather = data.list.filter((dt_txt_all) => dt_txt_all.dt_txt.includes('12:00:00'))
+		const dailyWeather = data.list.filter((dt_txt_all) => dt_txt_all.dt_txt.includes('00:00:00'))
 		console.log(dailyWeather)
 		const temp1 = dailyWeather.map(obj => obj.main.temp);
 		console.log(temp1);
@@ -125,12 +162,12 @@ function charts(dt_txt5day, temp1) {
 		data: {
 			labels: dt_txt5day,
 			datasets: [{
-				label: 'temprature',
+				label: 'temperature',
 				data: temp1,
 				borderWidth: 1,
 				borderColor: 'white',
 				backgroundColor: 'white',
-				color: 'black',
+				// color: 'black',
 			}]
 		},
 		options: {
@@ -161,6 +198,8 @@ function charts(dt_txt5day, temp1) {
 					}
 
 				}
+
+
 			}
 		}
 
@@ -168,6 +207,28 @@ function charts(dt_txt5day, temp1) {
 
 
 }
+const toggleBtn = document.getElementById("theme-switch");
+toggleBtn.addEventListener("click", () => {
+	var check = Chart.getChart('myChart');
+	changechartColor(check);
+});
+ function changechartColor(Chart){
+	if(Chart.data.datasets[0].borderColor === "white"){
+		
+	    Chart.options.scales.y.ticks.color = "black";
+        Chart.options.scales.x.ticks.color = "black";
+		Chart.data.datasets[0].borderColor = "black";
+		Chart.data.datasets[0].backgroundColor = "black";
+	    Chart.update();
+	}else{
+	    Chart.options.scales.y.ticks.color = "white";
+        Chart.options.scales.x.ticks.color = "white";
+		Chart.data.datasets[0].borderColor = "white";
+		Chart.data.datasets[0].backgroundColor = "white";
+	    Chart.update();
+	}
+	    
+ }
 
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 //https://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=bca34017f9a9fab4408fd5b6e3ed6e05
@@ -212,5 +273,10 @@ function charts(dt_txt5day, temp1) {
 // }
 
 // convertToCelsiusAndFahrenheit(lat, lon);
+ 
+async function timeIp(){
+	const response = await fetch("https://timeapi.io/api/time/current/ip?")
+	const timeresult = await response.json();
+	console.log(timeresult)
 
-
+}

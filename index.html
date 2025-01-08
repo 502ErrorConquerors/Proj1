@@ -8,41 +8,98 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="style.css">
   <style>
+    :root {
+        --base-color: white;
+        --text-color: #111528;
+        --bg-color: url('images/bg.svg');
+        --forecast-bg-color: rgba(11, 16, 55, 1);
+        --forecast-text-color: white;
+      }
+      
+      .dark-mode {
+        --base-color: #1e1e1e; /* Lighter dark background */
+        --text-color: #e0e0e0; /* Lighter text color */
+        --bg-color: url('images/bg.svg'); /* New background for dark mode */
+        --forecast-bg-color: rgba(30, 30, 30, 1); /* Darker background for forecast */
+        --forecast-text-color: #e0e0e0; /* Lighter text color for forecast */
+      }
     body {
       font-family: 'Roboto', sans-serif;
-      background-image: url('images/bg.svg');
+      background-color: var(--base-color);
+      background-image: var(--bg-color);
       background-size: cover;
       background-repeat: no-repeat;
       width: 100%;
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      color: var(--text-color);
+      padding: 16px;
+      transition: background-color 0.3s, color 0.3s,background-image 0.3;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
       color: white;
-
     }
-
+    .citydata {
+        margin-bottom: 10px; /* Add significant gap */
+      }
+      .citydata p {
+        margin: 5px 0; /* Reduced margin */
+        font-size: medium;
+        font-family: poppins;
+      }
+    .forecast-box {
+      
+        margin-top: 40px; /* Add significant gap */
+        height:fit-content;
+      }
     .forecast-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
       gap: 15px;
-      flex-wrap: wrap;
+      
     }
+    .weather-data{
+      display : grid;
+      gap:23vw;
 
+    }
     .forecast-day {
-      background: rgba(11, 16, 55, 1);
-      border-radius: 40px;
-      padding: 26px 6px;
-      display: flex;
+        background: var(--forecast-bg-color);
+        color: var(--forecast-text-color);
+        border-radius: 20px; /* Reduced border radius */
+        padding: 10px; /* Reduced padding */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 70px; /* Reduced width */
+        transition: transform 0.3s, background 0.3s;
+        gap: 10px; /* Equal gap between elements */
+      } 
+      .forecast-day h3 {
+        font-size: 14px; /* Reduced font size */
+        margin: 0; /* Removed margin */
+      }
+      
+      .forecast-day img {
+        width: 40px; /* Reduced image size */
+        height: 40px; /* Reduced image size */
+        margin: 0; /* Removed margin */
+      }
+      
+      .forecast-day .day-temp {
+        font-size: 14px; /* Reduced font size */
+        margin: 0; /* Removed margin */
+      }
 
-      flex-direction: column;
-      align-items: center;
-      width: 92px;
+    .forecast-day:hover {
+      transform: translateY(-10px);
+      background: rgba(11, 16, 55, 0.8);
     }
-
-
 
     .container {
       display: flex;
@@ -61,12 +118,16 @@
 
     .card {
       background: linear-gradient(168.44deg, #2E335A 1.62%, #1C1B33 95.72%);
-
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       color: white;
       text-align: center;
       padding: 15px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
 
     .card-medium {
@@ -186,22 +247,28 @@
     .weather-data {
       display: flex;
       justify-content: space-evenly;
-
       margin-top: 20px;
     }
 
     .forecast-box {
+      
       padding: 30px;
       background: linear-gradient(180deg, #282D51 0%, #5762B0 33%, #5B65B7 100%);
-
       border-radius: 20px;
     }
 
     #searchinput {
-      width: 100%;
-      box-shadow: -40px 60px 150px 0px #3B267B67;
-      border: none;
-      color: white;
+        width: 50%; /* Reduced width */
+        padding: 8px; /* Adjusted padding */
+        font-size: 14px; /* Adjusted font size */
+        box-shadow: -20px 30px 75px 0px #3B267B67; /* Adjusted box shadow */
+        border: none;
+        color: white;
+        border-radius: 20px; /* Adjusted border radius */
+      }
+
+    #searchinput::placeholder {
+      color: #ced4da;
     }
 
     .weather-controls {
@@ -210,7 +277,6 @@
       gap: 20px;
       flex-wrap: wrap;
       justify-content: flex-end;
-      /* Aligning content to the right */
       padding: 20px;
     }
 
@@ -271,7 +337,6 @@
       padding: 2px 10px;
       cursor: pointer;
     }
-
     .toggle-button {
       background-color: #111;
       border-radius: 50%;
@@ -367,27 +432,286 @@
       outline-offset: 2px;
     }
 
-    
+    .btn-gray {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
 
+    .rounded-full {
+      border-radius: 50%;
+    }
+
+    .p-2 {
+      padding: 8px;
+    }
+
+    .bg-gray-700 {
+      background-color: #343a40;
+    }
+
+    .text-white {
+      color: white;
+    }
+
+    .placeholder-gray-400::placeholder {
+      color: #ced4da;
+    }
+
+    .max-w-4xl {
+      max-width: 56rem;
+    }
+
+    .mx-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+
+    .font-bold {
+      font-weight: 700;
+    }
+
+    .text-4xl {
+      font-size: 2.25rem;
+    }
+
+    .text-6xl {
+      margin : 0px;
+      padding: 0px;
+      font-size: 3.2rem;
+    }
+
+    .text-lg {
+      font-size: 1.125rem;
+    }
+
+    .text-sm {
+      font-size: 0.875rem;
+    }
+
+
+
+    :root {
+        --base-color: white;
+        --text-color: #111528;
+      }
+      
+      .dark-mode {
+        --base-color: #070b1d;
+        --text-color: #ffffff;
+      }
+      
+      body {
+        background-color: var(--base-color);
+        color: var(--text-color);
+      }
+      
+      button {
+        border: none;
+        padding: .8em 2em;
+        background-color: #3a435d;
+        color: white;
+        border-radius: 4px;
+        font: inherit;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      .chart-container {
+        flex: 1;
+        min-width: 300px;
+        height: 60vh;
+      }
+      
+      .highlights-container {
+        flex: 1;
+        min-width: 300px;
+      }
+      
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .row {
+        display: flex;
+        gap: 20px;
+      }
+      
+      .card {
+        background: linear-gradient(168.44deg, #2E335A 1.62%, #1C1B33 95.72%);
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        color: white;
+        text-align: center;
+        padding: 15px;
+      }
+      
+      .card-medium {
+        flex: 1;
+      }
+      
+      .card-large {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      
+      .stat-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .stat-icon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+      
+      .stat-label {
+        color: rgba(255, 255, 255, 0.57);
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.84px;
+      }
+      
+      .progress-bar {
+        width: 80%;
+        height: 10px;
+        border-radius: 5px;
+        background: linear-gradient(to right, green, yellow, orange, red, purple);
+        margin: 10px 0;
+      }
+      
+      .see-more {
+        margin-top: 5px;
+        font-size: 14px;
+        opacity: 0.7;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      @media (max-width: 768px) {
+        .content {
+          flex-direction: column;
+        }
+      
+        .chart-container, .highlights-container {
+          min-width: 100%;
+          height: auto;
+        }
+      
+        .row {
+          flex-direction: column;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .content {
+          flex-direction: column;
+        }
+      
+        .chart-container {
+          height: 40vh;
+          min-width: 100%;
+        }
+      
+        .highlights-container {
+          min-width: 100%;
+        }
+      
+        .row {
+          flex-direction: column;
+        }
+      
+        .card {
+          padding: 10px;
+        }
+      
+        .stat-header {
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .stat-icon {
+          width: 20px;
+          height: 20px;
+        }
+      
+        .stat-label {
+          font-size: 10px;
+        }
+      
+        .progress-bar {
+          width: 100%;
+        }
+      
+        .see-more {
+          font-size: 12px;
+        }
+      
+        .forecast-grid {
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .forecast-day {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+      
+        .citydata h2 {
+          font-size: 1.5rem;
+        }
+      
+        .citydata p {
+          font-size: 1rem;
+        }
+      
+        #searchinput {
+          width: 100%;
+          padding: 8px;
+          font-size: 14px;
+          box-shadow: -20px 30px 75px 0px #3B267B67;
+          border: none;
+          color: white;
+          border-radius: 20px;
+        }
+      }
   </style>
 </head>
 
 <body class="p-4">
-
-
-
+  <header style="display: flex; justify-content: center; align-items: center; height: 60px; background: transparent ;color: white; background-color: rgba(0, 0, 255, 0.5);">
+    <div style="display: flex; gap: 20px;">
+      <h3 style="margin: 0;">Today</h3>
+      <h3 style="margin: 0; text-decoration: underline;">Week</h3>
+    </div>
+  </header>
   <div class="max-w-4xl mx-auto">
     <h1 class="text-2xl font-bold">
       Weather
     </h1>
     <div class="weather-controls">
       <div class="settings-container">
-        <div class="theme-toggle">
-          <div class="toggle-switch" tabindex="0" role="switch" aria-checked="false">
-            <div class="toggle-button"></div>
-          </div>
-          <div class="theme-label">Dark Mode</div>
-        </div>
+      
+        <button id="theme-switch" onclick="toggleTheme()">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-280q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Z"/></svg>
+          </button>
         <div class="temp-controls">
           <div class="celsius" tabindex="0" role="button" aria-pressed="true">°C</div>
           <div class="fahrenheit" tabindex="0" role="button" aria-pressed="false">°F</div>
@@ -396,201 +720,152 @@
       </div>
     </div>
 
-    
-
-    <div style="position: relative; display: inline-block; width: 300px;
-">
-<div style="position: relative; display: inline-block; width: 300px;">
-  <!-- Search Button -->
-  <button 
-    style="
-      position: absolute; 
-      top: 50%; 
-      left: 12px; 
-      transform: translateY(-50%); 
-      background: none; 
-      border: none; 
-      cursor: pointer; 
-      color: gray;">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-  <!-- Search Input -->
-  <input 
-    class="bg-gray-700 p-2 pl-14 rounded-full text-white placeholder-gray-400" 
-    id="searchinput"
-    placeholder="Search for a city or airport" 
-    type="text" 
-    style="width: 100%; box-sizing: border-box; text-align:center"/>
-</div>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
-
-
-
-
+    <div>
+      <button class="btn-gray p-2 rounded-full">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <input class="bg-gray-700 p-2 rounded-full text-white placeholder-gray-400" id="searchinput"
+        placeholder="Search for a city or airport" type="text" />
+    </div>
 
     <div class="weather-data">
-      <div class="citydata">
-
-        <h2 class="text-4xl font-bold ">
-          INDORE
-        </h2>
-        <p class="text-6xl font-bold">
-          19°
-        </p>
-        <p class="text-lg">
-          Mostly Clear
-        </p>
-        <p class="text-sm">
-          H:24° L:18°
-        </p>
-        <p class="text-sm">
-          TUESDAY, 1:41
-        </p>
-      </div>
-
-
-
-
-
-
-      <div class="forecast-box">
-        <div class="forecast-grid ">
-          <div class="forecast-day">
-            <h3 class="day-name">Tues</h3>
-            <img src="images/clouds 2.svg" alt="Tuesday weather" class="forecast-icon">
-            <div class="day-temp">27°C</div>
+        <div class="citydata">
+          <p class="text-4xl font-bold  livecitydata">
+            ------
+          </p>
+          <p class="text-6xl font-bold  livetempdata">
+            ---
+          </p>
+          <p class="text-lg livecloudcondition">
+            Mostly Clear
+          </p>
+         <p class="text-sm livealtitude">
+            <p class="livetemp_max">--</p>
+            <p class="livetemp_min">--</p>
+         </p>
+          <p class="text-sm livedaydate ">
+            TUESDAY, 1:41
+          </p>
+        </div>
+      
+        <div class="forecast-box">
+          <div class="forecast-grid">
+            <div class="forecast-day">
+              <h3 class="day-name">Tue</h3>
+              <img src="images/clouds 2.svg" alt="Tuesday weather" class="forecast-icon">
+              <div class="day-temp">27°C</div>
+            </div>
+            <div class="forecast-day">
+              <h3 class="day-name">Wed</h3>
+              <img src="images/clouds 2.svg" alt="Wednesday weather" class="forecast-icon">
+              <div class="day-temp">25°C</div>
+            </div>
+            <div class="forecast-day">
+              <h3 class="day-name">Fri</h3>
+              <img src="images/clear 3.svg" alt="Friday weather" class="forecast-icon">
+              <div class="day-temp">22°C</div>
+            </div>
+            <div class="forecast-day">
+              <h3 class="day-name">Sat</h3>
+              <img src="images/clear 3.svg" alt="Saturday weather" class="forecast-icon">
+              <div class="day-temp">22°C</div>
+            </div>
+            <div class="forecast-day">
+              <h3 class="day-name">Sun</h3>
+              <img src="images/clear 3.svg" alt="Sunday weather" class="forecast-icon">
+              <div class="day-temp">26°C</div>
+            </div>
+            <div class="forecast-day">
+              <h3 class="day-name">Mon</h3>
+              <img src="images/clear 3.svg" alt="Monday weather" class="forecast-icon">
+              <div class="day-temp">27°C</div>
+            </div>
           </div>
-          <div class="forecast-day">
-            <h3 class="day-name">Wed</h3>
-            <img src="images/clouds 2.svg" alt="Wednesday weather" class="forecast-icon">
-            <div class="day-temp">25°C</div>
+        </div>
+      </div>>
+  </div>
+
+  <div class="content">
+    <div class="chart-container">
+      <canvas id="myChart"></canvas>
+    </div>
+    <div class="highlights-container">
+      <h3 class="text-2xl font-bold">Today's Highlights</h3>
+      <div class="container">
+        <div class="row">
+          <div class="card card-medium">
+            <div class="stat-header">
+              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fbd9e4058b9e3875946f5254a34a4e24fd08e3ec87d0497754a49c331a5d933b"
+                alt="Humidity" class="stat-icon">
+              <span class="stat-label">HUMIDITY</span>
+            </div>
           </div>
-          <div class="forecast-day">
-            <h3 class="day-name">Fri</h3>
-            <img src="images/clear 3.svg" alt="Friday weather" class="forecast-icon">
-            <div class="day-temp">22°C</div>
+          <div class="card card-medium">
+            <div class="stat-header">
+              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a933361ce0f5923c1dd40d3b67a1d88336398806d4efc078ee8f0be0e05e317d"
+                alt="Wind" class="stat-icon">
+              <span class="stat-label">WIND</span>
+            </div>
           </div>
-          <div class="forecast-day">
-            <h3 class="day-name">Satur</h3>
-            <img src="images/clear 3.svg" alt="Saturday weather" class="forecast-icon">
-            <div class="day-temp">22°C</div>
+          <div class="card card-medium">
+            <div class="stat-header">
+              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/b5445529017309488e541ba91be1557462b60bd6eaf5eff531b3fb3f06b3e7e4"
+                alt="Rainfall" class="stat-icon">
+              <span class="stat-label">RAINFALL</span>
+            </div>
           </div>
-          <div class="forecast-day">
-            <h3 class="day-name">Sun</h3>
-            <img src="images/clear 3.svg" alt="Sunday weather" class="forecast-icon">
-            <div class="day-temp">26°C</div>
+        </div>
+        <div class="row">
+          <div class="card card-medium">
+            <div class="stat-header">
+              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6df86e609a77cea6e2a5e503f76495406abd965948ac8812eae5225304920fa0"
+                alt="Feels Like" class="stat-icon">
+              <span class="stat-label">FEELS LIKE</span>
+            </div>
           </div>
-          <div class="forecast-day">
-            <h3 class="day-name">Mon</h3>
-            <img src="images/clear 3.svg" alt="Monday weather" class="forecast-icon">
-            <div class="day-temp">27°C</div>
+          <div class="card card-large">
+            <div class="stat-header">
+              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6654dbf9e620cc2d7c2320d32fcb5585e964d6b64b306ecb87e9eb17e62bd7"
+                alt="Air Quality" class="stat-icon">
+              <span class="stat-label">AIR QUALITY</span>
+            </div>
+            <h3>3 - LOW HEALTH RISK</h3>
+            <div class="progress-bar"></div>
+            <div class="see-more">See More ➔</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="chart" style="position: relative; height:60vh; width:90vw">
-    <canvas id="myChart"></canvas>
-  </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // const ctx = document.getElementById('myChart');
   
-  <div class="container">
-    <!-- Row 1 -->
-    <h3 class="text-2xl font-bold">Today's Highlights</h3>
-    <div class="row">
-      <!-- Card 1: Humidity -->
-      <div class="card card-medium">
-        <div class="stat-header">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/fbd9e4058b9e3875946f5254a34a4e24fd08e3ec87d0497754a49c331a5d933b"
-            alt="Humidity" class="stat-icon">
-          <span class="stat-label">HUMIDITY</span>
-        </div>
-      </div>
-
-      <!-- Card 2: Wind -->
-      <div class="card card-medium">
-        <div class="stat-header">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/a933361ce0f5923c1dd40d3b67a1d88336398806d4efc078ee8f0be0e05e317d"
-            alt="Wind" class="stat-icon">
-          <span class="stat-label">WIND</span>
-        </div>
-      </div>
-
-      <!-- Card 3: Rainfall -->
-      <div class="card card-medium">
-        <div class="stat-header">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/b5445529017309488e541ba91be1557462b60bd6eaf5eff531b3fb3f06b3e7e4"
-            alt="Rainfall" class="stat-icon">
-          <span class="stat-label">RAINFALL</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="row">
-      <!-- Card 4: Feels Like -->
-      <div class="card card-medium">
-        <div class="stat-header">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/6df86e609a77cea6e2a5e503f76495406abd965948ac8812eae5225304920fa0"
-            alt="Feels Like" class="stat-icon">
-          <span class="stat-label">FEELS LIKE</span>
-        </div>
-      </div>
-
-      <!-- Card 5: Air Quality -->
-      <div class="card card-large">
-        <div class="stat-header">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6654dbf9e620cc2d7c2320d32fcb5585e964d6b64b306ecb87e9eb17e62bd7"
-            alt="Air Quality" class="stat-icon">
-          <span class="stat-label">AIR QUALITY</span>
-        </div>
-        <h3>3 - LOW HEALTH RISK</h3>
-        <div class="progress-bar"></div>
-        <div class="see-more">See More ➔</div>
-      </div>
-    </div>
-  </div>
-
-
-
-
+    // new Chart(ctx, {
+    //     type: 'line',
+    //     data: {
+    //         labels: ['04:00', '05:00','06:00', '07:00','08:00', '09:00', '10:00', '11:00', '12:00', '01:00'],
+    //         datasets: [{
+    //             label: '# of Votes',
+    //             data: [13, 12, 12, 11, 12, 14, 16, 16, 17, 19],
+    //             borderWidth: 1
+    //         }]
+    //     },
+    //     options: {
+    //         scales: {
+    //             y: {
+    //                 beginAtZero: false
+    //             }
+    //         }
+    //     }
+    // });
+  </script>
+  
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="script.js"></script>
-<script>
-  // const ctx = document.getElementById('myChart');
-
-  // new Chart(ctx, {
-  //     type: 'line',
-  //     data: {
-  //         labels: ['04:00', '05:00','06:00', '07:00','08:00', '09:00', '10:00', '11:00', '12:00', '01:00'],
-  //         datasets: [{
-  //             label: '# of Votes',
-  //             data: [13, 12, 12, 11, 12, 14, 16, 16, 17, 19],
-  //             borderWidth: 1
-  //         }]
-  //     },
-  //     options: {
-  //         scales: {
-  //             y: {
-  //                 beginAtZero: false
-  //             }
-  //         }
-  //     }
-  // });
-</script>
-
 </html>
