@@ -46,10 +46,40 @@
     }
     .citydata {
         margin-bottom: 10px; 
+        padding: 20px;
+        text-align: center;
+        gap:5px;
       }
       .citydata p {
-        margin: 5px 0; 
+        margin: 3px 0; 
       }
+
+      .citydata .livecitydata {
+        font-size: 24px;
+        font-weight:bold;
+        margin-bottom: 0;
+      }
+      .citydata .livetempdata {
+        font-size: 42px;
+        font-weight:bold;
+        margin-top: 0; 
+      }
+      .citydata .livecloudcondition {
+        font-size: 18px;
+        font-weight:bold; 
+      }
+      .citydata .livealtitude {
+        font-size: 14px;
+        font-weight:bold; 
+      }
+      .citydata .liveday,
+.citydata .livedaydate,
+.citydata .livetime {
+    font-size: 0.875em;  /* Adjust font size as needed */
+    margin: 2px 0;  /* Margin between spans */
+    display: inline-block;
+}
+
     .forecast-box {
         margin-top: 40px; /* Add significant gap */
         height:fit-content;
@@ -191,9 +221,10 @@
       font-size: 42px;
       font-weight: 500;
       margin: 8px 0;
+      display:flex;
       justify-content:center;
       align-items:center;
-      padding-top: 10px;
+      padding-top: 20px;
     }
 
     .stat-info {
@@ -241,9 +272,11 @@
     }
 
     .weather-data {
-      display: flex;
-      justify-content: space-evenly;
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      justify-content: space-between;
       margin-top: 20px;
+      gap:40px;
     }
 
     .forecast-box {
@@ -719,22 +752,22 @@
 
     <div class="weather-data">
         <div class="citydata">
-            <p class="text-4xl font-bold  livecitydata">
+            <p class="  livecitydata">
               ------
             </p>
-            <p class="text-6xl font-bold  livetempdata">
+            <p class=" livetempdata">
               ---
             </p>
-            <p class="text-lg livecloudcondition">
+            <p class=" livecloudcondition">
               ---
             </p>
-           <p class="text-sm livealtitude">
+           <p class=" livealtitude">
               <p class="livetemp_max">--</p>
               <p class="livetemp_min">--</p>
            </p>
-           <span class="text-sm liveday">---</span>
-            <span class="text-sm livedaydate ">---</span>
-            <span class="text-sm livetime ">---</span>
+           <span class=" liveday">---</span>
+            <span class=" livedaydate ">---</span>
+            <span class=" livetim ">---</span>
         </div>
       
         <div class="forecast-box">
