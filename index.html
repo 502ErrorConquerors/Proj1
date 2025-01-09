@@ -17,10 +17,11 @@
         --forecast-text-color: white;
       }
       
+      
       .dark-mode {
         --base-color: #1e1e1e; /* Lighter dark background */
         --text-color: #e0e0e0; /* Lighter text color */
-        --bg-color: url('images/bg.svg'); /* New background for dark mode */
+        --bg-color: url('images/bg2.png'); /* New background for dark mode */
         --forecast-bg-color: rgba(30, 30, 30, 1); /* Darker background for forecast */
         --forecast-text-color: #e0e0e0; /* Lighter text color for forecast */
       }
@@ -44,15 +45,12 @@
       color: white;
     }
     .citydata {
-        margin-bottom: 10px; /* Add significant gap */
+        margin-bottom: 10px; 
       }
       .citydata p {
-        margin: 5px 0; /* Reduced margin */
-        font-size: medium;
-        font-family: poppins;
+        margin: 5px 0; 
       }
     .forecast-box {
-      
         margin-top: 40px; /* Add significant gap */
         height:fit-content;
       }
@@ -62,11 +60,6 @@
         overflow-x: auto;
       gap: 15px;
       
-    }
-    .weather-data{
-      display : grid;
-      gap:23vw;
-
     }
     .forecast-day {
         background: var(--forecast-bg-color);
@@ -198,6 +191,9 @@
       font-size: 42px;
       font-weight: 500;
       margin: 8px 0;
+      justify-content:center;
+      align-items:center;
+      padding-top: 10px;
     }
 
     .stat-info {
@@ -251,7 +247,6 @@
     }
 
     .forecast-box {
-      
       padding: 30px;
       background: linear-gradient(180deg, #282D51 0%, #5762B0 33%, #5B65B7 100%);
       border-radius: 20px;
@@ -337,6 +332,7 @@
       padding: 2px 10px;
       cursor: pointer;
     }
+
     .toggle-button {
       background-color: #111;
       border-radius: 50%;
@@ -481,9 +477,7 @@
     }
 
     .text-6xl {
-      margin : 0px;
-      padding: 0px;
-      font-size: 3.2rem;
+      font-size: 3.75rem;
     }
 
     .text-lg {
@@ -690,17 +684,12 @@
           color: white;
           border-radius: 20px;
         }
+
       }
   </style>
 </head>
 
 <body class="p-4">
-  <header style="display: flex; justify-content: center; align-items: center; height: 60px; background: transparent ;color: white; background-color: rgba(0, 0, 255, 0.5);">
-    <div style="display: flex; gap: 20px;">
-      <h3 style="margin: 0;">Today</h3>
-      <h3 style="margin: 0; text-decoration: underline;">Week</h3>
-    </div>
-  </header>
   <div class="max-w-4xl mx-auto">
     <h1 class="text-2xl font-bold">
       Weather
@@ -730,28 +719,28 @@
 
     <div class="weather-data">
         <div class="citydata">
-          <p class="text-4xl font-bold  livecitydata">
-            ------
-          </p>
-          <p class="text-6xl font-bold  livetempdata">
-            ---
-          </p>
-          <p class="text-lg livecloudcondition">
-            Mostly Clear
-          </p>
-         <p class="text-sm livealtitude">
-            <p class="livetemp_max">--</p>
-            <p class="livetemp_min">--</p>
-         </p>
-          <p class="text-sm livedaydate ">
-            TUESDAY, 1:41
-          </p>
+            <p class="text-4xl font-bold  livecitydata">
+              ------
+            </p>
+            <p class="text-6xl font-bold  livetempdata">
+              ---
+            </p>
+            <p class="text-lg livecloudcondition">
+              ---
+            </p>
+           <p class="text-sm livealtitude">
+              <p class="livetemp_max">--</p>
+              <p class="livetemp_min">--</p>
+           </p>
+           <span class="text-sm liveday">---</span>
+            <span class="text-sm livedaydate ">---</span>
+            <span class="text-sm livetime ">---</span>
         </div>
       
         <div class="forecast-box">
           <div class="forecast-grid">
             <div class="forecast-day">
-              <h3 class="day-name">Tue</h3>
+              <h3 class="day-name">Tues</h3>
               <img src="images/clouds 2.svg" alt="Tuesday weather" class="forecast-icon">
               <div class="day-temp">27°C</div>
             </div>
@@ -782,7 +771,7 @@
             </div>
           </div>
         </div>
-      </div>>
+      </div>
   </div>
 
   <div class="content">
@@ -793,26 +782,30 @@
       <h3 class="text-2xl font-bold">Today's Highlights</h3>
       <div class="container">
         <div class="row">
-          <div class="card card-medium">
-            <div class="stat-header">
-              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fbd9e4058b9e3875946f5254a34a4e24fd08e3ec87d0497754a49c331a5d933b"
-                alt="Humidity" class="stat-icon">
-              <span class="stat-label">HUMIDITY</span>
-            </div>
-          </div>
+            <div class="card card-medium">
+                <div class="stat-header">
+                  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fbd9e4058b9e3875946f5254a34a4e24fd08e3ec87d0497754a49c331a5d933b" 
+                       alt="Humidity" class="stat-icon">
+                  <p class="stat-label ">HUMIDITY</p>
+                </div>
+                <div class="stat-value stat-humidity">--</div>
+              </div>
+              
           <div class="card card-medium">
             <div class="stat-header">
               <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a933361ce0f5923c1dd40d3b67a1d88336398806d4efc078ee8f0be0e05e317d"
                 alt="Wind" class="stat-icon">
-              <span class="stat-label">WIND</span>
+              <span class="stat-label ">WIND</span>
             </div>
+            <div class="stat-value stat-wind">--</div>
           </div>
           <div class="card card-medium">
             <div class="stat-header">
               <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/b5445529017309488e541ba91be1557462b60bd6eaf5eff531b3fb3f06b3e7e4"
                 alt="Rainfall" class="stat-icon">
-              <span class="stat-label">RAINFALL</span>
+              <span class="stat-label ">RAINFALL</span>
             </div>
+            <div class="stat-value stat-rainfall">--</div>
           </div>
         </div>
         <div class="row">
@@ -820,52 +813,63 @@
             <div class="stat-header">
               <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6df86e609a77cea6e2a5e503f76495406abd965948ac8812eae5225304920fa0"
                 alt="Feels Like" class="stat-icon">
-              <span class="stat-label">FEELS LIKE</span>
+              <span class="stat-label ">FEELS LIKE</span>
             </div>
+            <div class="stat-value stat-feelslike">--</div>
           </div>
-          <div class="card card-large">
+          <div class="card card-medium">
             <div class="stat-header">
               <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6654dbf9e620cc2d7c2320d32fcb5585e964d6b64b306ecb87e9eb17e62bd7"
-                alt="Air Quality" class="stat-icon">
-              <span class="stat-label">AIR QUALITY</span>
+                alt="Sunrise" class="stat-icon">
+              <span class="stat-label ">SUNRISE</span>
             </div>
-            <h3>3 - LOW HEALTH RISK</h3>
+            <div class="stat-value stat-sunrise">--</div>
+          </div>
+          <div class="card card-medium">
+            <div class="stat-header">
+              <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6654dbf9e620cc2d7c2320d32fcb5585e964d6b64b306ecb87e9eb17e62bd7"
+                alt="Sunset" class="stat-icon">
+              <span class="stat-label stat-sunset">SUNSET</span>
+            </div>
+            <div class="stat-value stat-header">--</div>
+          </div>
+          </div>
+            <!-- <h3>3 - LOW HEALTH RISK</h3>
             <div class="progress-bar"></div>
-            <div class="see-more">See More ➔</div>
+            <div class="see-more">See More ➔</div> -->
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="script.js"></script>
-  <script>
-    // const ctx = document.getElementById('myChart');
-  
-    // new Chart(ctx, {
-    //     type: 'line',
-    //     data: {
-    //         labels: ['04:00', '05:00','06:00', '07:00','08:00', '09:00', '10:00', '11:00', '12:00', '01:00'],
-    //         datasets: [{
-    //             label: '# of Votes',
-    //             data: [13, 12, 12, 11, 12, 14, 16, 16, 17, 19],
-    //             borderWidth: 1
-    //         }]
-    //     },
-    //     options: {
-    //         scales: {
-    //             y: {
-    //                 beginAtZero: false
-    //             }
-    //         }
-    //     }
-    // });
-  </script>
-  
+  </div> 
   <script>
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
     }
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+  <!-- <script>
+     const ctx = document.getElementById('myChart');
+  
+     new Chart(ctx, {
+         type: 'line',
+         data: {
+             labels: ['04:00', '05:00','06:00', '07:00','08:00', '09:00', '10:00', '11:00', '12:00', '01:00'],
+             datasets: [{
+                 label: '# of Votes',
+                 data: [13, 12, 12, 11, 12, 14, 16, 16, 17, 19],
+                 borderWidth: 1
+             }]
+         },
+         options: {
+             scales: {
+                 y: {
+                     beginAtZero: false
+                 }
+             }
+         }
+     });
+  </script> -->
 </body>
 </html>

@@ -10,8 +10,7 @@
 
 
 
-
-
+const timeUrl = "https://timeapi.io/api/time/current/coordinate?";
 
 const apiKey = "7038c275b759dfb5e3159826d0c38a3f";
 const url = 'https://api.openweathermap.org/data/2.5/weather?&q=';
@@ -63,6 +62,10 @@ async function fetchWeatherData(cityname) {
 		var lon = result.coord.lon;
 		var lat = result.coord.lat;
 		
+		time(lat,lon);
+
+
+		//Left side temperature data
 		const livetemp = document.getElementsByClassName("livetempdata")
 		livetemp[0].innerHTML= `<p>${parseInt(result.main.temp)}°</p>`
 
@@ -75,11 +78,31 @@ async function fetchWeatherData(cityname) {
 		temp_max[0].innerHTML = `<p>Max:${result.main.temp_max}</p>`
 
 		const temp_min = document.getElementsByClassName("livetemp_min")
-		temp_max[0].innerHTML = `<p>Min:${result.main.temp_min}</p>`
+		temp_min[0].innerHTML = `<p>Min:${result.main.temp_min}</p>`
+
+		
+
+
+		//right side temperature data
+		const livehumidity= document.getElementsByClassName("stat-humidity")
+		livehumidity[0].innerHTML = `<div>${result.main.humidity}</div>`
+
+		const livewind = document.getElementsByClassName("stat-wind")
+		livewind[0].innerHTML = `<div>${result.wind.speed}</div>`
+
+		const liveFeelsLike = document.getElementsByClassName("stat-feelslike")
+		liveFeelsLike[0].innerHTML = `<div>${result.main.feels_like}</div>`
+
+		const liverainfall = document.getElementsByClassName("stat-rainfall")
+		liverainfall[0].innerHTML = `<div>${result.weather[0].icon}</div>`
+		
+
 
 		console.log(lat)
 		console.log(lon)
+		
 		checkWeather(lat, lon);
+		
 
 		
 
@@ -99,7 +122,24 @@ async function fetchWeatherData(cityname) {
 
 	}
 }
+async function time(lat, lon) {
+	const response = await fetch(timeUrl + `latitude=` + lat + `&longitude=` + lon );
+	let timedata = await response.json();
+	console.log(timedata);
 
+	const livedate = document.getElementsByClassName("livedaydate")
+		const datelocale = timedata.date
+		 livedate[0].innerHTML = `<span>${datelocale}</span>`
+
+	const liveday = document.getElementsByClassName("liveday")
+	const daylocale = timedata.dayOfWeek
+	liveday[0].innerHTML=`<span>${daylocale},</span>`
+
+	const livetime = document.getElementsByClassName("livetime")
+	const timelocale = timedata.time
+	livetime[0].innerHTML= `<span>${timelocale}</span>`
+
+}
 // Call the function
 fetchWeatherData();
 // console.log(lat)
@@ -126,9 +166,16 @@ async function checkWeather(lat, lon) {
 		console.log(temp1);
 		const dt_txt5day = dailyWeather.map(obj => obj.dt_txt);
 		console.log(dt_txt5day);
+		let newdt_txt5day = [];
+		for(let i =0 ;i<5;i++){
+			let slicetxt = dt_txt5day[i];
+			let finaltxt = slicetxt.slice(0,10);
+			newdt_txt5day.push(finaltxt);
+		}
+		console.log(newdt_txt5day);
 
 
-		charts(dt_txt5day, temp1);
+		charts(newdt_txt5day, temp1);
 
 		// removeChart(myChart);
 	}
@@ -153,21 +200,20 @@ async function checkWeather(lat, lon) {
 
 
 
-function charts(dt_txt5day, temp1) {
+function charts(newdt_txt5day, temp1) {
 
 	const ctx = document.getElementById('myChart');
 
 	const myChart = new Chart(ctx, {
 		type: 'line',
 		data: {
-			labels: dt_txt5day,
+			labels: newdt_txt5day,
 			datasets: [{
 				label: 'temperature',
 				data: temp1,
 				borderWidth: 1,
 				borderColor: 'white',
 				backgroundColor: 'white',
-				// color: 'black',
 			}]
 		},
 		options: {
@@ -236,9 +282,15 @@ toggleBtn.addEventListener("click", () => {
 
 
 // CELSIUS TO FAHRENHEIT CONVERSION :-
-// function celsiusToFahrenheit(celsius) {
-//     return (celsius * 9/5) + 32;
-// }
+function celsiusToFahrenheit(celsius) {
+    return (celsius * 9/5) + 32;
+}
+
+function fahrenheitToCelsius(fahrenheit){
+	return ((fahrenheit-32)*5/9);
+}
+
+
 // const celsiusValue = 25; // Replace with the value you receive
 // const fahrenheitValue = celsiusToFahrenheit(celsiusValue);
 // console.log(`${celsiusValue}°C is equal to ${fahrenheitValue}°F`);
@@ -273,10 +325,11 @@ toggleBtn.addEventListener("click", () => {
 // }
 
 // convertToCelsiusAndFahrenheit(lat, lon);
- 
-async function timeIp(){
-	const response = await fetch("https://timeapi.io/api/time/current/ip?")
-	const timeresult = await response.json();
-	console.log(timeresult)
 
-}
+
+
+
+
+
+// https://api.api-ninjas.com/v1/worldtime?city=london
+//kq9W4Udu/3Yvc4/6pxb9uQ==JSlcX34R8ftbYf7z
